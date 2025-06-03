@@ -1,22 +1,19 @@
 import express from "express";
+import router from "./routes/routes.js";
 
 const app = express();
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(router);
 
-app.get("/",(req,res)=>{
-    res.status(200).send("get all");
-});
+//MiddleWare
+// const methodLogger = (req,res,next)=>{
+//     console.log(req.method);
+//     next();
+// }
 
-app.get("/:id",(req,res)=>{
-    res.status(200).send("get ID");
-});
-
-app.post("/",(req,res)=>{
-    console.log(req);
-    res.status(200).send("post");
-});
+// app.use(methodLogger);
 
 app.listen(8080,()=>{
     console.log("Listening on port 8080");
