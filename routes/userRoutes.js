@@ -1,25 +1,17 @@
 import express from "express";
+import UserController from "../controllers/userController.js";
 
 const userRoutes = express.Router();
+const userController = new UserController();
 
-userRoutes.get("/",(req,res)=>{
-    res.status(200).send("get all users");
-});
+userRoutes.get("/",userController.getAllUsers);
 
-userRoutes.get("/:id",(req,res)=>{
-    res.status(200).send("get user by ID");
-});
+userRoutes.get("/:id",userController.getUserbyID);
 
-userRoutes.post("/",(req,res)=>{
-    res.status(200).send("Create user");
-});
+userRoutes.post("/",userController.createUser);
 
-userRoutes.put("/:id",(req,res)=>{
-    res.status(200).send("update a user");
-});
+userRoutes.put("/:id",userController.updateUser);
 
-userRoutes.delete("/:id",(req,res)=>{
-    res.status(200).send("delete a user");
-});
+userRoutes.delete("/:id",userController.deleteUser);
 
 export default userRoutes;

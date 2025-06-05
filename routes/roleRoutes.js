@@ -1,25 +1,17 @@
 import express from "express";
+import RoleController from "../controllers/RoleController.js";
 
 const roleRoutes = express.Router();
+const roleController = new RoleController();
 
-roleRoutes.get("/",(req,res)=>{
-    res.status(200).send("get all roles");
-});
+roleRoutes.get("/",roleController.getAllRoles);
 
-roleRoutes.get("/:id",(req,res)=>{
-    res.status(200).send("get role by ID");
-});
+roleRoutes.get("/:id",roleController.getRolebyID);
 
-roleRoutes.post("/",(req,res)=>{
-    res.status(200).send("Create role");
-});
+roleRoutes.post("/",roleController.createRole);
 
-roleRoutes.put("/:id",(req,res)=>{
-    res.status(200).send("update a role");
-});
+roleRoutes.put("/:id",roleController.updateRole);
 
-roleRoutes.delete("/:id",(req,res)=>{
-    res.status(200).send("delete a role");
-});
+roleRoutes.delete("/:id",roleController.deleteRole);
 
 export default roleRoutes;
