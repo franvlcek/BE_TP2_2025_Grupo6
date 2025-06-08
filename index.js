@@ -1,6 +1,9 @@
 import express from "express";
 import router from "./routes/routes.js";
+import connection from "./connection/connection.js";
+import { SERVER_PORT } from "./config/config.js";
 
+//console.log(process.env);
 const app = express();
 
 app.use(express.urlencoded({extended:true}));
@@ -15,8 +18,8 @@ app.use(router);
 
 // app.use(methodLogger);
 
-app.listen(8080,()=>{
-    console.log("Listening on port 8080");
+app.listen(SERVER_PORT,()=>{
+    console.log(`Listening on port: ${SERVER_PORT}`);
 });
 
 

@@ -1,11 +1,26 @@
+import UserService from "../services/UserService.js";
+
 class UserController{
 
+    userService = new UserService();
+
     getAllUsers(req,res){
-        res.status(200).send("Get All Users");
+        const users = this.userService.getAllUsers();
+        res.status(200).send({
+            success:true,
+            message: users,
+        });
     }
 
     getUserbyID(req,res){
-        res.status(200).send("Get Users by ID");
+
+        const {id} = req.params;
+        const user = this.userService.getUserbyID(id);
+        
+        res.status(200).send({
+            success:true,
+            message: user,
+        });
     }
 
     createUser(req,res){
