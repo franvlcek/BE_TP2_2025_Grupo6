@@ -4,8 +4,8 @@ class UserController{
 
     userService = new UserService();
 
-    getAllUsers(req,res){
-        const users = this.userService.getAllUsers();
+    async getAllUsers(req,res){
+        const users = await this.userService.getAllUsers();
         res.status(200).send({
             success:true,
             message: users,
@@ -23,8 +23,23 @@ class UserController{
         });
     }
 
-    createUser(req,res){
-        res.status(200).send("Create User");
+    async createUser(req,res){
+        try {
+
+            const {name,mail, pass} = req.body;
+
+            const user = await this.userService.createUser({name,mail, pass});
+
+            res.status(200).send({
+                success:true,
+                message: user,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
 
     updateUser(req,res){

@@ -1,11 +1,19 @@
+import User from "../models/User.js";
+
 class UserService{
 
-    getAllUsers(){
-        return "get all users service";
+    async getAllUsers(){
+        const users = await User.findAll();
+        return users;
     }
 
     getUserbyID(id){
         return `get user by id service: ${id}`;
+    }
+
+    async createUser(data){
+        const user = await User.create(data);
+        return user;
     }
 
 
