@@ -4,11 +4,11 @@ import RoleController from "../controllers/RoleController.js";
 const roleRoutes = express.Router();
 const roleController = new RoleController();
 
-roleRoutes.get("/",roleController.getAllRoles);
+roleRoutes.get("/",roleController.getAllRoles.bind(roleController));
 
-roleRoutes.get("/:id",roleController.getRolebyID);
+roleRoutes.get("/:id",roleController.getRolebyID.bind(roleController));
 
-roleRoutes.post("/",roleController.createRole);
+roleRoutes.post("/",roleController.createRole.bind(roleController));
 
 roleRoutes.put("/:id",roleController.updateRole);
 

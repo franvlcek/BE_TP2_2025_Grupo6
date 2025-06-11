@@ -26,9 +26,9 @@ class UserController{
     async createUser(req,res){
         try {
 
-            const {name,mail, pass} = req.body;
+            const {name,mail, pass, RoleId} = req.body;
 
-            const user = await this.userService.createUser({name,mail, pass});
+            const user = await this.userService.createUser({name,mail, pass, RoleId});
 
             res.status(200).send({
                 success:true,

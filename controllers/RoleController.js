@@ -1,15 +1,45 @@
+import RoleService from "../services/RoleService.js";
+
 class RoleController{
 
-    getAllRoles(req,res){
-        res.status(200).send("Get All Roles");
+    roleService = new RoleService();
+
+    async getAllRoles(req,res){
+
+        const roles = await this.roleService.getAllRoles();
+        res.status(200).send({
+            success:true,
+            message: roles,
+        });
     }
 
     getRolebyID(req,res){
-        res.status(200).send("Get Role by ID");
+        const {id} = req.params;
+        const role = this.roleService.getRolebyID(id);
+        
+        res.status(200).send({
+            success:true,
+            message: role,
+        });
     }
 
-    createRole(req,res){
-        res.status(200).send("Create a Role");
+    async createRole(req,res){
+        try {
+
+            const {roleName} = req.body;
+
+            const role = await this.roleService.createRole({roleName});
+
+            res.status(200).send({
+                success:true,
+                message: role,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
 
     updateRole(req,res){
