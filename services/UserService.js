@@ -7,8 +7,11 @@ class UserService{
         return users;
     }
 
-    getUserbyID(id){
-        return `get user by id service: ${id}`;
+    async getUserbyID(id){
+        const user = await User.findOne({
+            where:{id:id}
+        });
+        return user;
     }
 
     async createUser(data){
@@ -16,7 +19,19 @@ class UserService{
         return user;
     }
 
+    async updateUser(id,data){
+        const user =await User.update(data,{
+            where:{id:id}
+        });
+        return user;
+    }
 
+    async deleteUser(id){
+        const deleted = await User.destroy({
+            where:{id:id}
+        });
+        return deleted;
+    }
 }
 
 export default UserService;

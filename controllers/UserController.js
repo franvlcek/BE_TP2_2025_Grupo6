@@ -12,15 +12,22 @@ class UserController{
         });
     }
 
-    getUserbyID(req,res){
+    async getUserbyID(req,res){
 
         const {id} = req.params;
-        const user = this.userService.getUserbyID(id);
-        
-        res.status(200).send({
-            success:true,
-            message: user,
-        });
+
+        try {
+            const user = await this.userService.getUserbyID(id);
+            res.status(200).send({
+                success:true,
+                message: user,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
 
     async createUser(req,res){
@@ -42,16 +49,40 @@ class UserController{
         }
     }
 
-    updateUser(req,res){
-        res.status(200).send("Update a User");
+    async updateUser(req,res){
+        const {id} = req.params;
+        try {
+            const {name,mail, pass, RoleId} = req.body;
+            const user = await this.userService.updateUser(id,{name,mail, pass, RoleId});
+            res.status(200).send({
+                success:true,
+                message: user,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
 
-    deleteUser(req,res){
-        res.status(200).send("Delete a User");
+    async deleteUser(req,res){
+        const {id} = req.params;
+
+        try {
+            const user = await this.userService.deleteUser(id);
+            res.status(200).send({
+                success:true,
+                message: user,
+            });
+
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
-
-
-
 };
 
 export default UserController;
