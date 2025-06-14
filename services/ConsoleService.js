@@ -35,6 +35,3 @@ class ConsoleService{
 }
 
 export default ConsoleService;
-
-
-
