@@ -7,13 +7,30 @@ class ConsoleService{
         return consoles;
     }
 
-    getConsolebyID(id){
-        return `get console by id service: ${id}`;
+    async getConsolebyID(id){
+        const console = await Console.findOne({
+            where:{id:id}
+        });
+        return console;
     }
 
     async createConsole(data){
         const console = await Console.create(data);
         return console;
+    }
+
+    async updateConsole(id, data){
+        const console =await Console.update(data,{
+            where:{id:id}
+        });
+        return console;
+    }
+
+    async deleteConsole(id){
+        const deleted = await Console.destroy({
+            where:{id:id}
+        });
+        return deleted;
     }
 }
 

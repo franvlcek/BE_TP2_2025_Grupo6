@@ -12,15 +12,21 @@ class ConsoleController{
         });
     }
 
-    getConsolebyID(req,res){
+    async getConsolebyID(req,res){
 
         const {id} = req.params;
-        const console = this.consoleService.getConsolebyID(id);
-        
-        res.status(200).send({
-            success:true,
-            message: console,
-        });
+        try {
+            const console = await this.consoleService.getConsolebyID(id);
+            res.status(200).send({
+                success:true,
+                message: console,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
     }
 
     async createConsole(req,res){
@@ -42,7 +48,39 @@ class ConsoleController{
         }
     }
 
+    async updateConsole(req,res){
+        const {id} = req.params;
+        try {
+            const {name} = req.body;
+            const console = await this.consoleService.updateConsole(id,{name});
+            res.status(200).send({
+                success:true,
+                message: console,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
+    }
 
+    async deleteConsole(req,res){
+        const {id} = req.params;
+
+        try {
+            const console = await this.consoleService.deleteConsole(id);
+            res.status(200).send({
+                success:true,
+                message: console,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
+    }
 }
 
 export default ConsoleController;
