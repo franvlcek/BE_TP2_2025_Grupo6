@@ -1,24 +1,24 @@
-import GameService from "../services/GameService.js";
+import CommentService from "../services/CommentService.js";
 
-class GameController{
+class CommentController{
 
-    gameService = new GameService();
+    commentService = new CommentService();
 
-    async getAllGames(req,res){
-        const games = await this.gameService.getAllGames();
+    async getAllComments(req,res){
+        const comment = await this.commentService.getAllComments();
         res.status(200).send({
             success:true,
-            message: games,
+            message: comment,
         });
     }
 
-    async getGamebyID(req,res){
+    async getCommentbyID(req,res){
         const {id} = req.params;
         try {
-            const game = await this.gameService.getGamebyID(id);
+            const comment = await this.commentService.getCommentbyID(id);
             res.status(200).send({
                 success:true,
-                message: game,
+                message: comment,
             });
         } catch (error) {
             res.status(400).send({
@@ -28,16 +28,16 @@ class GameController{
         }
     }
 
-    async createGame(req,res){
+    async createComment(req,res){
         try {
 
-            const {gameName, ConsoleId, GenreId} = req.body;
+            const {content, UserId, GameId} = req.body;
 
-            const game = await this.gameService.createGame({gameName, ConsoleId, GenreId});
+            const comment = await this.commentService.createComment({content, UserId, GameId});
 
             res.status(200).send({
                 success:true,
-                message: game,
+                message: comment,
             });
         } catch (error) {
             res.status(400).send({
@@ -47,14 +47,14 @@ class GameController{
         }
     }
 
-    async updateGame(req,res){
+    async updateComment(req,res){
         const {id} = req.params;
         try {
-            const {gameName, ConsoleId, GenreId} = req.body;
-            const game = await this.gameService.updateGame(id,{gameName, ConsoleId, GenreId});
+            const {content, UserId, GameId} = req.body;
+            const comment = await this.commentService.updateComment(id,{content, UserId, GameId});
             res.status(200).send({
                 success:true,
-                message: game,
+                message: comment,
             });
         } catch (error) {
             res.status(400).send({
@@ -64,14 +64,14 @@ class GameController{
         }
     }
 
-    async deleteGame(req,res){
+    async deleteComment(req,res){
         const {id} = req.params;
 
         try {
-            const game = await this.gameService.deleteGame(id);
+            const comment = await this.commentService.deleteComment(id);
             res.status(200).send({
                 success:true,
-                message: game,
+                message: comment,
             });
         } catch (error) {
             res.status(400).send({
@@ -83,4 +83,4 @@ class GameController{
 
 }
 
-export default GameController;
+export default CommentController;
