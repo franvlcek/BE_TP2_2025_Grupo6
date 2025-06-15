@@ -8,21 +8,23 @@ Pasos a seguir una vez clonado el repositorio:
 4. Ejecutar el comando npm start (para "producción") o npm run dev (para desarrollo)
 
 Modelos:
-User
-Role
-Console
-Genre
-Game
+1. User
+2. Role
+3. Console
+4. Genre
+5. Game
+6. Comment
 
 Rutas:
-localhost:8080/user/
-localhost:8080/role/
-localhost:8080/console/
-localhost:8080/genre/
-localhost:8080/game/
+1. localhost:8080/user/
+2. localhost:8080/role/
+3. localhost:8080/console/
+4. localhost:8080/genre/
+5. localhost:8080/game/
+6. localhost:8080/comment/
 
-GET "/" -> Obtener todas las instancias del modelo
-GET "/:id" -> Obtener un objeto especifico
-POST "/" -> Crear 
-PUT "/:id" -> Modificar un objeto
-DELETE "/:id" -> Eliminar un objeto
+1. GET "/" -> Obtener todas las instancias del modelo
+2. GET "/:id" -> Obtener un objeto especifico
+3. POST "/" -> Crear 
+4. PUT "/:id" -> Modificar un objeto
+5. DELETE "/:id" -> Eliminar un objeto

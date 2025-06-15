@@ -1,4 +1,4 @@
-import { DataTypes, Model, STRING } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import connection from "../connection/connection.js";
 
 class Role extends Model{}
