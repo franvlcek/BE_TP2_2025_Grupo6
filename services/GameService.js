@@ -1,15 +1,32 @@
-import { Game } from "../models/index.js";
+import { Game, Console, Genre } from "../models/index.js";
 
 class GameService{
 
     async getAllGames(){
-        const games = await Game.findAll();
+        const games = await Game.findAll({
+            include:[{
+                model:Console,
+                attributes:['name']
+            },
+            {
+                model: Genre,
+                attributes:['genreName']
+            }]
+        });
         return games;
     }
 
     async getGamebyID(id){
         const game = await Game.findOne({
-            where:{id:id}
+            where:{id:id},
+            include:[{
+                model:Console,
+                attributes:['name']
+            },
+            {
+                model: Genre,
+                attributes:['genreName']
+            }]
         });
         return game;
     }

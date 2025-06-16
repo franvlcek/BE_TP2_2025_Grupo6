@@ -1,4 +1,4 @@
-import { Console } from "../models/index.js";
+import { Console, Game } from "../models/index.js";
 
 class ConsoleService{
 
@@ -9,7 +9,11 @@ class ConsoleService{
 
     async getConsolebyID(id){
         const console = await Console.findOne({
-            where:{id:id}
+            where:{id:id},
+            include: {
+                model: Game,
+                attributes: ['gameName']
+            }
         });
         return console;
     }
