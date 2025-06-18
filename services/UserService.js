@@ -28,6 +28,23 @@ class UserService{
         return user;
     }
 
+    async login(data){
+        const {mail, pass} = data;
+        const user = await User.findOne({
+            where:{mail:mail}
+        });
+
+        if(!user){
+            throw new Error("User not found");
+        }
+
+        const comparePass = await user.compare(pass);
+        if(!comparePass){
+            throw new Error("User not found");
+        }
+        return {user, comparePass};
+    }
+
     async updateUser(id,data){
         const user =await User.update(data,{
             where:{id:id}

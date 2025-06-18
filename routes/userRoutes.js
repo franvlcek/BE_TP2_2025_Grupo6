@@ -9,6 +9,7 @@ userRoutes.get("/",userController.getAllUsers.bind(userController));
 userRoutes.get("/:id",userController.getUserbyID.bind(userController));
 
 userRoutes.post("/",userController.createUser.bind(userController));
+userRoutes.post("/login",userController.login.bind(userController));
 
 userRoutes.put("/:id",userController.updateUser.bind(userController));
 
