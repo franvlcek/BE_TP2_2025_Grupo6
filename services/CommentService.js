@@ -1,15 +1,32 @@
-import { Comment } from "../models/index.js";
+import { Comment, User, Game } from "../models/index.js";
 
 class CommentService{
 
     async getAllComments(){
-        const comment = await Comment.findAll();
+        const comment = await Comment.findAll({
+            include:[{
+                model:User,
+                attributes:["id",'name',"RoleId"]
+            },
+            {
+                model: Game,
+                attributes:['gameName']
+            }]
+        });
         return comment;
     }
 
     async getCommentbyID(id){
         const comment = await Comment.findOne({
-            where:{id:id}
+            where:{id:id},
+            include:[{
+                model:User,
+                attributes:["id",'name',"RoleId"]
+            },
+            {
+                model: Game,
+                attributes:['gameName']
+            }]
         });
         return comment;
     }

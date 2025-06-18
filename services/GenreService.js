@@ -1,4 +1,4 @@
-import { Genre } from "../models/index.js";
+import { Genre, Game } from "../models/index.js";
 
 class GenreService{
 
@@ -9,7 +9,11 @@ class GenreService{
 
     async getGenrebyID(id){
         const genre = await Genre.findOne({
-            where:{id:id}
+            where:{id:id},
+            include: {
+                model: Game,
+                attributes: ['id','gameName']
+            }
         });
         return genre;
     }

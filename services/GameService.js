@@ -1,4 +1,4 @@
-import { Game, Console, Genre } from "../models/index.js";
+import { Game, Console, Genre, Comment, User } from "../models/index.js";
 
 class GameService{
 
@@ -26,6 +26,14 @@ class GameService{
             {
                 model: Genre,
                 attributes:['genreName']
+            },
+            {
+                model: Comment,
+                attributes:["id",'content'],
+                include:[{
+                    model:User,
+                    attributes:["id","name","RoleId"]
+                }]
             }]
         });
         return game;

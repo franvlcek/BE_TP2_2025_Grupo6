@@ -12,7 +12,7 @@ class ConsoleService{
             where:{id:id},
             include: {
                 model: Game,
-                attributes: ['gameName']
+                attributes: ['id','gameName']
             }
         });
         return console;

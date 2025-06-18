@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import { User, Comment, Game } from "../models/index.js";
 
 class UserService{
 
@@ -9,7 +9,16 @@ class UserService{
 
     async getUserbyID(id){
         const user = await User.findOne({
-            where:{id:id}
+            where:{id:id},
+            include:[
+            {
+                model: Comment,
+                attributes:["id",'content',"GameId"],
+                include:[{
+                    model:Game,
+                    attributes:["id","gamename"]
+                }]
+            }]
         });
         return user;
     }
