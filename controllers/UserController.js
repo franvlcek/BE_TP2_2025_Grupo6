@@ -54,7 +54,12 @@ class UserController{
 
             const {mail, pass} = req.body;
             const token = await this.userService.login({mail, pass});
-            res.cookie("login",token);
+            res.cookie("token",token,{
+                httpOnly: true,
+                sameSite: "lax",
+                secure: false,
+                path: "/",
+            });
 
             res.status(200).send({
                 success:true,
@@ -71,12 +76,20 @@ class UserController{
 
     async me(req,res){
         try {
-            const {login} = req.cookies;
-            const user = await this.userService.me(login);
+            const token = req.cookies.token;
+            if(!token){
+                return res.status(401).send({
+                success:false,
+                message: "jwt error",
+            });
+            }
+            const user = await this.userService.me(token);
+            console.log(req.cookies);
             res.status(200).send({
                 success:true,
                 message: user,
             });
+            // res.json({ message: "Login successful" });
 
         } catch (error) {
             res.status(400).send({
