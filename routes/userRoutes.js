@@ -6,6 +6,7 @@ const userController = new UserController();
 
 userRoutes.get("/",userController.getAllUsers.bind(userController));
 
+userRoutes.get("/me",userController.me.bind(userController));
 userRoutes.get("/:id",userController.getUserbyID.bind(userController));
 
 userRoutes.post("/",userController.createUser.bind(userController));

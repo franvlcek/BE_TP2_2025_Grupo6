@@ -1,4 +1,5 @@
 import { User, Comment, Game } from "../models/index.js";
+import { generateToken, verifyToken } from "../utils/jwt.js";
 
 class UserService{
 
@@ -42,7 +43,21 @@ class UserService{
         if(!comparePass){
             throw new Error("User not found");
         }
-        return {user, comparePass};
+
+        const payload = {
+            id: user.id,
+            name: user.name,
+            role: user.RoleId
+        };
+
+        const token = generateToken(payload);
+
+        return token;
+    }
+
+    async me(token){
+        const user = verifyToken(token);
+        return user;
     }
 
     async updateUser(id,data){

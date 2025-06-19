@@ -3,11 +3,11 @@ import router from "./routes/routes.js";
 import connection from "./connection/connection.js";
 import { SERVER_PORT } from "./config/config.js";
 import cors from "cors";
-//import User from "./models/User.js";
+import cookieParser from "cookie-parser";
 
 //console.log(process.env);
 const app = express();
-
+app.use(cookieParser());
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
