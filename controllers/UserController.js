@@ -34,7 +34,6 @@ class UserController{
         try {
 
             const {name,mail, pass, RoleId} = req.body;
-
             const user = await this.userService.createUser({name,mail, pass, RoleId});
 
             res.status(200).send({
@@ -74,13 +73,33 @@ class UserController{
         }
     }
 
+    async logout(req,res){
+        try {
+            res.clearCookie("token",{
+                httpOnly: true,
+                sameSite: "lax",
+                secure: false,
+                path:"/",
+            });
+            res.status(200).send({
+                success:true,
+                message: "User logged out",
+            });
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message: error.message,
+            });
+        }
+    }
+
     async me(req,res){
         try {
             const token = req.cookies.token;
             if(!token){
                 return res.status(401).send({
                 success:false,
-                message: "jwt error",
+                message: "Token error: user is not logged in or does not exist",
             });
             }
             const user = await this.userService.me(token);
@@ -89,7 +108,6 @@ class UserController{
                 success:true,
                 message: user,
             });
-            // res.json({ message: "Login successful" });
 
         } catch (error) {
             res.status(400).send({
