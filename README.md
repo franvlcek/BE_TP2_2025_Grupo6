@@ -16,15 +16,20 @@ Modelos:
 6. Comment
 
 Rutas:
+
+1. GET "/" -> Obtener todas las instancias del modelo
+2. GET "user/me" -> Obtener datos del usuario logueado actualmente
+3. GET "/:id" -> Obtener un objeto especifico
+4. POST "/" -> Crear 
+5. POST "/user/login" -> Loguearse con la info de un usuario 
+6. POST "/user/logout" -> Borrar las cookies de login de la sesion actual
+7. PUT "/:id" -> Modificar un objeto
+8. DELETE "/:id" -> Eliminar un objeto
+
+Endpoints:
 1. localhost:8080/user/
 2. localhost:8080/role/
 3. localhost:8080/console/
 4. localhost:8080/genre/
 5. localhost:8080/game/
 6. localhost:8080/comment/
-
-1. GET "/" -> Obtener todas las instancias del modelo
-2. GET "/:id" -> Obtener un objeto especifico
-3. POST "/" -> Crear 
-4. PUT "/:id" -> Modificar un objeto
-5. DELETE "/:id" -> Eliminar un objeto
