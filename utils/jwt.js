@@ -22,7 +22,7 @@ export const requireAdmin=(req,res,next)=>{
 
     try {
         const decoded = verifyToken(token);
-        if(decoded.message.role !== 1){
+        if(decoded.role !== 1){
             return res.status(400).send({
                 success:false,
                 message: "Admin access only",
@@ -31,6 +31,7 @@ export const requireAdmin=(req,res,next)=>{
         req.user = decoded;
         next();
     } catch (error) {
+        
         return res.status(400).send({
                 success:false,
                 message: error.message,
