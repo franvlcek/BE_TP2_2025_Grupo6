@@ -4,8 +4,8 @@ import connection from "./connection/connection.js";
 import { SERVER_PORT } from "./config/config.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { errorHandler } from "./utils/errorHandler.js";
 
-//console.log(process.env);
 const app = express();
 
 app.use(cors({
@@ -17,9 +17,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(router);
 
+app.use((req, res, next)=>{
+    errorHandler(400,req,res,next);
+});
 
-//Para tirar las tablas y volverlas a hacer
-//await connection.sync({force:true});
 await connection.sync({force:false});
 
 app.listen(SERVER_PORT,()=>{

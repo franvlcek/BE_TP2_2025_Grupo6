@@ -10,7 +10,10 @@ class User extends Model{
 }
 
 User.init({
-    name:DataTypes.STRING(50),
+    name:{
+        type:DataTypes.STRING(50),
+        allowNull:false,
+    },
     mail:{
         type:DataTypes.STRING,
         allowNull:false,

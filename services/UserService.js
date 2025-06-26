@@ -4,13 +4,16 @@ import { generateToken, verifyToken } from "../utils/jwt.js";
 class UserService{
 
     async getAllUsers(){
-        const users = await User.findAll();
+        const users = await User.findAll({
+            attributes:["id","name","mail","RoleId"]
+        });
         return users;
     }
 
     async getUserbyID(id){
         const user = await User.findOne({
             where:{id:id},
+            attributes:["id","name","mail","RoleId"],
             include:[
             {
                 model: Comment,
@@ -25,8 +28,13 @@ class UserService{
     }
 
     async createUser(data){
-        const user = await User.create(data);
-        return user;
+        try {
+            const user = await User.create(data);
+            return user;
+        } catch (error) {
+            return next(error);
+        }
+        
     }
 
     async login(data){
@@ -41,7 +49,7 @@ class UserService{
 
         const comparePass = await user.compare(pass);
         if(!comparePass){
-            throw new Error("User not found");
+            throw new Error("Password is incorrect");
         }
 
         const payload = {

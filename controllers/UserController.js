@@ -18,10 +18,18 @@ class UserController{
 
         try {
             const user = await this.userService.getUserbyID(id);
-            res.status(200).send({
+            if(user == null || user == ""){
+                res.status(400).send({
+                success:false,
+                message: `User with id ${id} not found`,
+                });
+            }else{
+                res.status(200).send({
                 success:true,
                 message: user,
-            });
+                });
+            }
+            
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -34,12 +42,20 @@ class UserController{
         try {
 
             const {name,mail, pass, RoleId} = req.body;
-            const user = await this.userService.createUser({name,mail, pass, RoleId});
+            if(!name || !mail || !pass || !RoleId){
+                res.status(400).send({
+                success:false,
+                message: "Name, mail, password and role are required",
+                });
+            }else{
+                const user = await this.userService.createUser({name,mail, pass, RoleId});
 
-            res.status(200).send({
-                success:true,
-                message: user,
-            });
+                res.status(200).send({
+                    success:true,
+                    message: user,
+                });
+            }
+            
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -99,7 +115,7 @@ class UserController{
             if(!token){
                 return res.status(401).send({
                 success:false,
-                message: "Token error: user is not logged in or does not exist",
+                message: "User is not logged in or does not exist",
             });
             }
             const user = await this.userService.me(token);
@@ -122,10 +138,18 @@ class UserController{
         try {
             const {name,mail, pass, RoleId} = req.body;
             const user = await this.userService.updateUser(id,{name,mail, pass, RoleId});
-            res.status(200).send({
-                success:true,
-                message: user,
-            });
+            if(user == 1){
+                res.status(200).send({
+                    success:true,
+                    message: "User was updated successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `User with id ${id} not found`,
+                });
+            }
+            
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -139,10 +163,17 @@ class UserController{
 
         try {
             const user = await this.userService.deleteUser(id);
-            res.status(200).send({
-                success:true,
-                message: user,
-            });
+            if(user == 1){
+                res.status(200).send({
+                    success:true,
+                    message: "User was deleted successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `User with id ${id} not found`,
+                });
+            }
 
         } catch (error) {
             res.status(400).send({

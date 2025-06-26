@@ -14,9 +14,9 @@ export const verifyToken = (token) =>{
 export const requireAdmin=(req,res,next)=>{
     const token = req.cookies.token;
     if(!token){
-        return res.status(400).send({
+        return res.status(403).send({
                 success:false,
-                message: "Unauthorized",
+                message: "Unauthorized: Admin access Only",
             });
     }
 
