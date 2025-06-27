@@ -16,10 +16,17 @@ class GameController{
         const {id} = req.params;
         try {
             const game = await this.gameService.getGamebyID(id);
-            res.status(200).send({
+            if(game == null || game == ""){
+                res.status(400).send({
+                success:false,
+                message: `Game with id ${id} not found`,
+                });
+            }else{
+                res.status(200).send({
                 success:true,
                 message: game,
-            });
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -32,13 +39,19 @@ class GameController{
         try {
 
             const {gameName, ConsoleId, GenreId} = req.body;
+            if(!gameName || !ConsoleId || !GenreId){
+                res.status(400).send({
+                success:false,
+                message: "Game name, console, and genre are required",
+                });
+            }else{
+                const game = await this.gameService.createGame({gameName, ConsoleId, GenreId});
 
-            const game = await this.gameService.createGame({gameName, ConsoleId, GenreId});
-
-            res.status(200).send({
-                success:true,
-                message: game,
-            });
+                res.status(200).send({
+                    success:true,
+                    message: game,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -52,10 +65,17 @@ class GameController{
         try {
             const {gameName, ConsoleId, GenreId} = req.body;
             const game = await this.gameService.updateGame(id,{gameName, ConsoleId, GenreId});
-            res.status(200).send({
+            if(game == 1){
+                res.status(200).send({
                 success:true,
-                message: game,
-            });
+                message: "Game was updated successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `Game with id ${id} not found`,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -69,10 +89,17 @@ class GameController{
 
         try {
             const game = await this.gameService.deleteGame(id);
-            res.status(200).send({
+            if(game == 1){
+                res.status(200).send({
                 success:true,
-                message: game,
-            });
+                message: "Game was deleted successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `Game with id ${id} not found`,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,

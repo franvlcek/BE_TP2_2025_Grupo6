@@ -17,10 +17,17 @@ class RoleController{
         const {id} = req.params;
         try {
             const role = await this.roleService.getRolebyID(id);
-            res.status(200).send({
-                success:true,
-                message: role,
-            });
+            if(role == null || role == ""){
+                res.status(400).send({
+                success:false,
+                message: `Role with id ${id} not found`,
+                });
+            }else{
+                res.status(200).send({
+                    success:true,
+                    message: role,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -33,13 +40,19 @@ class RoleController{
         try {
 
             const {roleName} = req.body;
+            if(!roleName){
+                res.status(400).send({
+                success:false,
+                message: "Role name is required",
+                });
+            }else{
+                const role = await this.roleService.createRole({roleName});
 
-            const role = await this.roleService.createRole({roleName});
-
-            res.status(200).send({
-                success:true,
-                message: role,
-            });
+                res.status(200).send({
+                    success:true,
+                    message: role,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -53,10 +66,17 @@ class RoleController{
         try {
             const {roleName} = req.body;
             const role = await this.roleService.updateRole(id,{roleName});
-            res.status(200).send({
+            if(role == 1){
+                res.status(200).send({
                 success:true,
-                message: role,
-            });
+                message: "Role was updated successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `Role with id ${id} not found`,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
@@ -70,10 +90,17 @@ class RoleController{
 
         try {
             const role = await this.roleService.deleteRole(id);
-            res.status(200).send({
+            if(role == 1){
+                res.status(200).send({
                 success:true,
-                message: role,
-            });
+                message: "Role was deleted successfully",
+                });
+            }else{
+                res.status(400).send({
+                success:false,
+                message: `Role with id ${id} not found`,
+                });
+            }
         } catch (error) {
             res.status(400).send({
                 success:false,
